@@ -120,7 +120,13 @@ function canQueenCaptureKing(queen, king) {
  *  3, 0, 3   => false
  */
 function isIsoscelesTriangle(a, b, c) {
-  
+  if (a === b || a === c || b === c) {
+    if (a + b <= c || a + c <= b || b + c <= a) {
+      return false;
+    }
+    return true;
+  }
+  return false;
 }
 
 /**
@@ -137,8 +143,32 @@ function isIsoscelesTriangle(a, b, c) {
  *  10  => X
  *  26  => XXVI
  */
-function convertToRomanNumerals(/* num */) {
-  throw new Error('Not implemented');
+function convertToRomanNumerals(num) {
+  const units = num % 10;
+  const dozens = (num - units) / 10;
+  let str = '';
+  if (units > 0 && units < 4) {
+    for (let i = 1; i <= units; i += 1) {
+      str += 'I';
+    }
+  } else if (units === 4) {
+    str = 'IV';
+  } else if (units >= 5 && units < 9) {
+    str = 'V';
+    for (let i = 1; i <= units - 5; i += 1) {
+      str += 'I';
+    }
+  } else if (units === 9) {
+    str = 'IX';
+  }
+  if (dozens === 0) {
+    return str;
+  }
+  let result = '';
+  for (let i = 1; i <= dozens; i += 1) {
+    result += 'X';
+  }
+  return result + str;
 }
 
 /**
@@ -156,8 +186,33 @@ function convertToRomanNumerals(/* num */) {
  *  '10,5'    => 'one zero point five'
  *  '1950.2'  => 'one nine five zero point two'
  */
-function convertNumberToString(/* numberStr */) {
-  throw new Error('Not implemented');
+function convertNumberToString(numberStr) {
+  const ARR = [
+    'zero',
+    'one',
+    'two',
+    'three',
+    'four',
+    'five',
+    'six',
+    'seven',
+    'eight',
+    'nine',
+  ];
+  let result = '';
+  let i = 0;
+  if (numberStr[i] === '-') {
+    result += 'minus ';
+    i += 1;
+  }
+  for (; i < numberStr.length - 1; i += 1) {
+    if (numberStr[i] === '.' || numberStr[i] === ',') {
+      result += 'point ';
+    } else {
+      result += `${ARR[numberStr[i]]} `;
+    }
+  }
+  return result + ARR[numberStr[numberStr.length - 1]];
 }
 
 /**
