@@ -21,8 +21,8 @@
  *  0  => true
  *  -5 => false
  */
-function isPositive(/* number */) {
-  throw new Error('Not implemented');
+function isPositive(number) {
+  return number >= 0;
 }
 
 /**
@@ -38,8 +38,10 @@ function isPositive(/* number */) {
  *  -5, 0, 5      => 5
  *  -0.1, 0, 0.2  => 0.2
  */
-function getMaxNumber(/* a, b, c */) {
-  throw new Error('Not implemented');
+function getMaxNumber(a, b, c) {
+  const maxAB = a >= b ? a : b;
+  const maxCAB = maxAB >= c ? maxAB : c;
+  return maxCAB;
 }
 
 /**
@@ -60,8 +62,43 @@ function getMaxNumber(/* a, b, c */) {
  * {x: 1, y: 1}, {x: 2, y: 8} => false
  * {x: 1, y: 1}, {x: 2, y: 8} => false
  */
-function canQueenCaptureKing(/* queen, king */) {
-  throw new Error('Not implemented');
+function canQueenCaptureKing(queen, king) {
+  if (queen.x === king.x && queen.y === king.y) return false;
+  if (queen.x === king.x || queen.y === king.y) return true;
+
+  let rowA = queen.x - 1;
+  let colA = queen.y - 1;
+  while (rowA >= 1 && colA >= 1) {
+    if (rowA === king.x && colA === king.y) return true;
+    rowA -= 1;
+    colA -= 1;
+  }
+
+  let rowB = queen.x + 1;
+  let colB = queen.y + 1;
+  while (rowB < 9 && colB < 9) {
+    if (rowB === king.x && colB === king.y) return true;
+    rowB += 1;
+    colB += 1;
+  }
+
+  let rowC = queen.x - 1;
+  let colC = queen.y + 1;
+  while (rowC > 0 && colC < 9) {
+    if (rowC === king.x && colC === king.y) return true;
+    rowC -= 1;
+    colC += 1;
+  }
+
+  let rowD = queen.x + 1;
+  let colD = queen.y - 1;
+  while (rowD < 9 && colD > 0) {
+    if (rowD === king.x && colD === king.y) return true;
+    rowD += 1;
+    colD -= 1;
+  }
+
+  return false;
 }
 
 /**
@@ -82,8 +119,8 @@ function canQueenCaptureKing(/* queen, king */) {
  *  2, 2, 5   => false
  *  3, 0, 3   => false
  */
-function isIsoscelesTriangle(/* a, b, c */) {
-  throw new Error('Not implemented');
+function isIsoscelesTriangle(a, b, c) {
+  
 }
 
 /**
