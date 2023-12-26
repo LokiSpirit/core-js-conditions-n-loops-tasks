@@ -250,8 +250,15 @@ function convertNumberToString(numberStr) {
  *  '0123210'   => true
  *  'qweqwe'    => false
  */
-function isPalindrome(/* str */) {
-  throw new Error('Not implemented');
+function isPalindrome(str) {
+  let k = 0;
+  for (let i = str.length - 1; i >= 0; i -= 1) {
+    if (str[i] !== str[k]) {
+      return false;
+    }
+    k += 1;
+  }
+  return true;
 }
 
 /**
@@ -268,8 +275,14 @@ function isPalindrome(/* str */) {
  *  'qwerty', 'Q'     => -1
  *  'qwerty', 'p'     => -1
  */
-function getIndexOf(/* str, letter */) {
-  throw new Error('Not implemented');
+function getIndexOf(str, letter) {
+  const index = -1;
+  for (let i = 0; i < str.length; i += 1) {
+    if (str[i] === letter) {
+      return i;
+    }
+  }
+  return index;
 }
 
 /**
@@ -287,8 +300,23 @@ function getIndexOf(/* str, letter */) {
  *  12345, 0    => false
  *  12345, 6    => false
  */
-function isContainNumber(/* num, digit */) {
-  throw new Error('Not implemented');
+function isContainNumber(num, digit) {
+  if (digit === num) return true;
+  let divider = 1;
+  let per = 10;
+  let minus = 0;
+  let d = ((num % per) - minus) / divider;
+  while (num - (num % (per / 10)) > 0) {
+    if (digit !== d) {
+      minus = num % per;
+      per *= 10;
+      divider *= 10;
+      d = ((num % per) - minus) / divider;
+    } else {
+      return true;
+    }
+  }
+  return false;
 }
 
 /**
@@ -304,8 +332,21 @@ function isContainNumber(/* num, digit */) {
  *  [2, 3, 9, 5] => 2       => 2 + 3 === 5 then balance element is 9 and its index = 2
  *  [1, 2, 3, 4, 5] => -1   => no balance element
  */
-function getBalanceIndex(/* arr */) {
-  throw new Error('Not implemented');
+function getBalanceIndex(arr) {
+  for (let i = 1; i < arr.length - 1; i += 1) {
+    let leftSum = 0;
+    let rightSum = 0;
+    for (let j = 0; j < i; j += 1) {
+      leftSum += arr[j];
+    }
+    for (let k = i + 1; k < arr.length; k += 1) {
+      rightSum += arr[k];
+    }
+    if (leftSum === rightSum) {
+      return i;
+    }
+  }
+  return -1;
 }
 
 /**
