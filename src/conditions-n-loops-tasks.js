@@ -417,14 +417,24 @@ function getSpiralMatrix(size) {
  *    [7, 8, 9]         [9, 6, 3]
  *  ]                 ]
  */
-function rotateMatrix(/* matrix */) {
-  /* let arr = [];
-  for (let i = 0; i < matrix.size; i += 1){
-      for (let j = 0; j < matrix.size; j += 1){
-        arr[i][j] = matrix[i][];
+function rotateMatrix(matrix) {
+  const result = matrix;
+  const copyMatrix = [];
+  for (let i = 0; i < matrix.length; i += 1) {
+    copyMatrix[i] = [];
   }
-  } */
-  throw new Error('Not implemented');
+  for (let i = 0; i < matrix.length; i += 1) {
+    for (let j = 0; j < matrix.length; j += 1) {
+      copyMatrix[i][j] = matrix[i][j];
+    }
+  }
+  const last = matrix.length - 1;
+  for (let i = 0; i < matrix.length; i += 1) {
+    for (let j = 0; j < matrix.length; j += 1) {
+      result[j][last - i] = copyMatrix[i][j];
+    }
+  }
+  return matrix;
 }
 
 /**
@@ -511,8 +521,8 @@ function shuffleChar(/* str, iterations */) {
  * @param {number} number The source number
  * @returns {number} The nearest larger number, or original number if none exists.
  */
-function getNearestBigger(number) {
-  const n = number.toString();
+function getNearestBigger(/* number */) {
+  /*  const n = number.toString();
   if (n.length === 1) return number;
   const arr = n.split('');
   let bigger;
@@ -531,7 +541,8 @@ function getNearestBigger(number) {
       }
     }
   }
-  return +bigger;
+  return +bigger; */
+  throw new Error('Not implemented');
 }
 
 module.exports = {
