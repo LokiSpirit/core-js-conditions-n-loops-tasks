@@ -451,17 +451,41 @@ function rotateMatrix(matrix) {
  *  [2, 9, 5, 9]    => [2, 5, 9, 9]
  *  [-2, 9, 5, -3]  => [-3, -2, 5, 9]
  */
-function sortByAsc(/* arr */) {
-  /* let base = arr.length - 1;
-  for (let i = 0; i < arr.length; i += 1){
-    if (arr[i] > arr[base]) {
-      let temp = arr[base];
-      let left = base - 1;
-arr
+/* function swap(massive, left, right) {
+  const array = massive;
+  const tempLeft = massive[left];
+  const tempRight = massive[right];
+  array[left] = tempRight;
+  array[right] = tempLeft;
+}
+function partitioning(leftPointer, rightPointer, base, arr) {
+  let left = leftPointer;
+  let right = rightPointer;
+  while (left <= right) {
+    while (left <= base && arr[left] <= arr[base]) {
+      left += 1;
+    }
+    while (right >= base && arr[right] >= arr[base]) {
+      right += 1;
+    }
+    if (left < right) {
+      swap(arr, left, right);
+      left += 1;
+      right -= 1;
     }
   }
-  return */
+  return [right, left];
+} */
+function sortByAsc(/* arr */) {
   throw new Error('Not implemented');
+  /* let leftPointer = 0;
+  let rightPointer = arr.length - 1;
+  const base = Math.floor((rightPointer + leftPointer) / 2);
+  while (true) {
+    let [left, right] = partitioning(leftPointer, rightPointer, base, arr);
+    leftPointer = 0;
+    rightPointer = left;
+  } */
 }
 
 /**
@@ -481,29 +505,56 @@ arr
  *  '012345', 3 => '024135' => '043215' => '031425'
  *  'qwerty', 3 => 'qetwry' => 'qtrewy' => 'qrwtey'
  */
-function shuffleChar(/* str, iterations */) {
-  /* const result = [];
+function shuffleChar(str, iterations) {
+  const copy = str;
+  const len = copy.length;
+  let count = 0;
+  if (!copy || copy.length < 3 || iterations === 0) {
+    return copy;
+  }
+  let initial = [];
+  const etalon = [];
+  const save = [];
+  for (let i = 0; i < copy.length; i += 1) {
+    initial[i] = i;
+    etalon[i] = i;
+  }
   for (let i = 0; i < iterations; i += 1) {
-    let indexLeft = 0;
-    let indexRight = Math.floor(str.length / 2);
-    for (let j = 0; j < str.length; j += 1) {
-      if (i % 2 === 0) {
-        result[indexLeft] = str[j];
-        indexLeft += 1;
-      } else {
-        result[indexRight] = str[j];
-        indexRight += 1;
+    const result = [];
+    let index = 0;
+    let j = 0;
+    while (j < len) {
+      result[index] = initial[j];
+      index += 1;
+      j += 2;
+    }
+    let k = 1;
+    while (k < len) {
+      result[index] = initial[k];
+      k += 2;
+      index += 1;
+    }
+    save[i] = result;
+    initial = result;
+    count += 1;
+    let flag = true;
+    for (let p = 0; p < len; p += 1) {
+      if (etalon[p] !== initial[p]) {
+        flag = false;
       }
     }
+    if (flag) {
+      const left = iterations % count;
+      initial = save[left - 1];
+      break;
+    }
   }
-  let resultStr = '';
-  for (let k = 0; k < result.length; k += 1) {
-    resultStr += result[k];
+  let s = '';
+  for (let t = 0; t < len; t += 1) {
+    s += copy[initial[t]];
   }
-  return resultStr; */
-  throw new Error('Not implemented');
+  return s;
 }
-
 /**
  * Returns the nearest largest integer consisting of the digits of the given positive integer.
  * If there is no such number, it returns the original number.
