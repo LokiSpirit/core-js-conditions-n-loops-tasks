@@ -451,41 +451,50 @@ function rotateMatrix(matrix) {
  *  [2, 9, 5, 9]    => [2, 5, 9, 9]
  *  [-2, 9, 5, -3]  => [-3, -2, 5, 9]
  */
-/* function swap(massive, left, right) {
-  const array = massive;
-  const tempLeft = massive[left];
-  const tempRight = massive[right];
-  array[left] = tempRight;
-  array[right] = tempLeft;
-}
-function partitioning(leftPointer, rightPointer, base, arr) {
-  let left = leftPointer;
-  let right = rightPointer;
-  while (left <= right) {
-    while (left <= base && arr[left] <= arr[base]) {
-      left += 1;
+
+function divideArr(arr, left, right) {
+  const copy = arr;
+  let l = left;
+  let r = right;
+  const base = copy[Math.floor((r + l) / 2)];
+  while (l <= r) {
+    while (copy[l] < base) {
+      l += 1;
     }
-    while (right >= base && arr[right] >= arr[base]) {
-      right += 1;
+    while (copy[r] > base) {
+      r -= 1;
     }
-    if (left < right) {
-      swap(arr, left, right);
-      left += 1;
-      right -= 1;
+    if (l <= r) {
+      const temp = copy[l];
+      copy[l] = copy[r];
+      copy[r] = temp;
+      l += 1;
+      r -= 1;
     }
   }
-  return [right, left];
-} */
-function sortByAsc(/* arr */) {
-  throw new Error('Not implemented');
-  /* let leftPointer = 0;
-  let rightPointer = arr.length - 1;
-  const base = Math.floor((rightPointer + leftPointer) / 2);
-  while (true) {
-    let [left, right] = partitioning(leftPointer, rightPointer, base, arr);
-    leftPointer = 0;
-    rightPointer = left;
-  } */
+  return l;
+}
+
+function helper(massive, left, right) {
+  if (massive.length < 2) {
+    return massive;
+  }
+
+  const index = divideArr(massive, left, right);
+
+  if (left < index - 1) {
+    helper(massive, left, index - 1);
+  }
+
+  if (index < right) {
+    helper(massive, index, right);
+  }
+
+  return massive;
+}
+
+function sortByAsc(arr) {
+  return helper(arr, 0, arr.length - 1);
 }
 
 /**
