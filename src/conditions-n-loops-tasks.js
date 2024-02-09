@@ -572,28 +572,52 @@ function shuffleChar(str, iterations) {
  * @param {number} number The source number
  * @returns {number} The nearest larger number, or original number if none exists.
  */
-function getNearestBigger(/* number */) {
-  /*  const n = number.toString();
-  if (n.length === 1) return number;
-  const arr = n.split('');
-  let bigger;
-  for (let i = 0; i < n.length; i += 1) {
-    for (let j = i + 1; j < n.length; j += 1) {
-      const temp = arr.slice(0);
-      temp[i] = arr[j];
-      temp[j] = arr[i];
-      const joined = temp.join('');
-      if (joined > n) {
-        if (!bigger) {
-          bigger = joined;
-        } else if (bigger > joined) {
-          bigger = joined;
-        }
+function getNearestBigger(number) {
+  if (number < 12) return number;
+  let copy = number;
+  const arr = [];
+  let count = 0;
+  let i = 10;
+  let divider = 1;
+  let num = 0;
+  while (copy !== 0) {
+    num = copy % i;
+    arr[count] = num / divider;
+    divider *= 10;
+    i *= 10;
+    count += 1;
+    copy -= num;
+  }
+  arr.reverse();
+  const arrCopy = [];
+  for (let j = 0; j < arr.length; j += 1) {
+    arrCopy[j] = arr[j];
+  }
+  let pivot = arr[arr.length - 1];
+  for (let j = arrCopy.length - 2; j >= 0; j -= 1) {
+    if (pivot <= arr[j]) {
+      pivot = arr[j];
+    } else {
+      const sorted = [];
+      for (let h = j + 1; h < arr.length; h += 1) {
+        sorted[h] = arr[h];
       }
+      sorted.sort((item1, item2) => item1 - item2);
+      const ind = sorted.findIndex((item) => item > arr[j]);
+      const bigger = sorted[ind];
+      sorted[ind] = arr[j];
+      const res = [];
+      for (let l = 0; l < j; l += 1) {
+        res[l] = arr[l];
+      }
+      res.push(bigger);
+      for (let l = 0; l < sorted.length; l += 1) {
+        res.push(sorted[l]);
+      }
+      return +res.join('');
     }
   }
-  return +bigger; */
-  throw new Error('Not implemented');
+  return number;
 }
 
 module.exports = {
